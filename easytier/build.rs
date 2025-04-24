@@ -72,6 +72,8 @@ impl WindowsBuild {
         if target.contains("x86_64") {
             println!("cargo:rustc-link-search=native=easytier/third_party/");
         } else if target.contains("i686") {
+			// enable thunk-rs when target os is windows and arch is i686
+			thunk::thunk();
             println!("cargo:rustc-link-search=native=easytier/third_party/i686/");
         } else if target.contains("aarch64") {
             println!("cargo:rustc-link-search=native=easytier/third_party/arm64/");
@@ -127,12 +129,6 @@ fn check_locale() {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // enable thunk-rs when target os is windows and arch is i686
-	#[cfg(target_os = "windows")]
-    if env::var("CARGO_CFG_TARGET_ARCH").unwrap() == "i686" {
-        thunk::thunk();
-    }
-
     #[cfg(target_os = "windows")]
     WindowsBuild::check_for_win();
 
