@@ -11,6 +11,10 @@ edition = "2021"
 name = "app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
+# enable thunk-rs when compiling for x86_64 windows
+[target.'cfg(all(windows, target_env = "msvc", not(target_arch = "aarch64")))'.build-dependencies]
+thunk-rs = { version = "0.3.3", features = ["win7"] }
+
 [build-dependencies]
 tauri-build = { version = "2.0.0-rc", features = [] }
 

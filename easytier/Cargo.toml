@@ -237,6 +237,10 @@ encoding = "0.2"
 winreg = "0.52"
 windows-service = "0.7.0"
 
+# enable thunk-rs when compiling for x86_64 windows
+[target.'cfg(all(windows, target_env = "msvc", not(target_arch = "aarch64")))'.build-dependencies]
+thunk-rs = { version = "0.3.3", features = ["win7"] }
+
 [build-dependencies]
 tonic-build = "0.12"
 globwalk = "0.8.1"
@@ -250,11 +254,6 @@ prost-reflect-build = { version = "0.14.0" }
 [target.'cfg(windows)'.build-dependencies]
 reqwest = { version = "0.12.12", features = ["blocking"] }
 zip = "0.6.6"
-
-# enable thunk-rs when compiling for x86_64 windows
-[target.'cfg(all(windows, target_env = "msvc", any(target_arch = "x86", target_arch = "x86_64")))'.build-dependencies]
-thunk-rs = { version = "0.3.3", features = ["win7"] }
-
 
 [dev-dependencies]
 serial_test = "3.0.0"
