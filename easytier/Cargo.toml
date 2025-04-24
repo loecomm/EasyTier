@@ -252,10 +252,7 @@ reqwest = { version = "0.12.12", features = ["blocking"] }
 zip = "0.6.6"
 
 # enable thunk-rs when compiling for x86_64 windows
-[target.x86_64-pc-windows-msvc.build-dependencies]
-thunk-rs = { version = "0.3.3", features = ["win7"] }
-
-[target.i686-pc-windows-msvc.build-dependencies]
+[target.'cfg(all(windows, target_env = "msvc", any(target_arch = "x86", target_arch = "x86_64")))'.build-dependencies]
 thunk-rs = { version = "0.3.3", features = ["win7"] }
 
 
