@@ -128,10 +128,7 @@ fn check_locale() {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // enable thun when target os is windows and arch is x86_64 or i686
-    #[cfg(all(
-        target_os = "windows",
-        any(target_arch = "x86_64", target_arch = "x86")
-    ))]
+    #[cfg(all(windows, target_env = "msvc", target_arch = "x86"))]
     thunk::thunk();
 
     #[cfg(target_os = "windows")]
